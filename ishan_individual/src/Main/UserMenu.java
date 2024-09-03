@@ -183,7 +183,8 @@ public class UserMenu extends User { // userMenu that inherits from a class call
             System.out.println("3. Tech Field Matching");
             System.out.println("4. Search User");
             System.out.println("5. Search Jobs");
-            System.out.println("6. Log out");
+            System.out.println("6. Resume Generator");
+            System.out.println("7. Log out");
             System.out.print("Choose an option: ");
             int choice = sc.nextInt();
 
@@ -206,6 +207,10 @@ public class UserMenu extends User { // userMenu that inherits from a class call
                     break;
 
                 case 6:
+                    u.prepresume();
+                    break;
+                    
+                case 7:
                     System.out.println("Logged out successfully.");
                     exit = false;
                     break;
