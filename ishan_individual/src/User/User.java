@@ -1138,4 +1138,47 @@ public class User {
         }
 
     }
+     public void prepresume() {
+        try {
+            String sql3 = "SELECT * FROM users WHERE email = ?";
+            PreparedStatement pre = DatabaseUtil.getConnection().prepareStatement(sql3);
+            pre.setString(1, this.getEmail());
+            ResultSet rs = pre.executeQuery();
+
+            while (rs.next()) {
+                int userId = rs.getInt("id");
+                String userName = rs.getString("name");
+                String email = rs.getString("email");
+                String location = rs.getString("location");
+                String education = rs.getString("education");
+                String personalityTraits = rs.getString("personality_traits");
+                int experience = rs.getInt("experience");
+
+                FileWriter fw = new FileWriter(userName + ".txt");
+
+                fw.write("Name: " + userName + "\n");
+                fw.write("Email: " + email + "\n");
+                fw.write("Location: " + location + "\n");
+                fw.write("Education: " + education + "\n");
+                fw.write("Personality Traits: " + personalityTraits + "\n");
+                fw.write("Experience: " + experience + " years\n");
+
+                String sql4 = "SELECT s.skill_name FROM user_skills us JOIN skills s ON us.skill_id = s.id WHERE us.user_id = ?";
+                PreparedStatement pre1 = DatabaseUtil.getConnection().prepareStatement(sql4);
+                pre1.setInt(1, userId);
+                ResultSet rs1 = pre1.executeQuery();
+
+                fw.write("\nSkills:\n");
+                while (rs1.next()) {
+                    String skillName = rs1.getString("skill_name");
+                    fw.write("- " + skillName + "\n");
+                }
+                fw.close();
+                System.out.println("Your Resume is Created");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
